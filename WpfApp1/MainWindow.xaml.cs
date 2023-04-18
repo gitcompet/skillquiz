@@ -18,8 +18,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Navigation;
+using WpfApp1.pages;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Net.Http.Json;
+using WebApiMiniPj.Modeles;
+using System.Collections;
 
 namespace WpfApp1
+
+
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -28,8 +37,15 @@ namespace WpfApp1
     {
         string str;
         string str2;
+
+        public object NavigationService { get; private set; }
+        HttpClient client = new HttpClient();
+
         public MainWindow()
         {
+   
+            //            _NavigationFrame.Navigate(new Page1());
+
             //           MessageBox.Show("tb.Text");
             InitializeComponent();
 
@@ -75,6 +91,7 @@ namespace WpfApp1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            
             int usrchk = 0;
             string sqlcon = (   "Data Source=LAP-2023-LUX3\\SQLEXPRESS;" +
                                 "User ID=skillquizusr;" +
@@ -87,14 +104,14 @@ namespace WpfApp1
             SqlCommand myCommand = new SqlCommand("select * from [skillquizdb].[dbo].[Usr] where LoginTxt = '" + str.ToString() + "'", myConnection);
 
             SqlDataReader myReader = myCommand.ExecuteReader();
-            myReader.Read();
+            myReader.Read();            
 
             try
             {
-                string strbdd = myReader["LoginTxt"].ToString();
+                string strBdd = myReader["LoginTxt"].ToString();             
 
                 // MessageBox.Show(myReader["LoginId"].ToString());
-                if (str != strbdd)
+                if (str != strBdd)
                 {
                     usrchk = 0;
                 }
@@ -103,9 +120,55 @@ namespace WpfApp1
                     str2 = passwordBox1.Password;
                     if (str2 == myReader["PasswordTxt"].ToString())
                     {
-                        this.Close();
                         usrchk = 1;
+                        //                        this.Navigate("pages/Page1.xaml");
+                        //                        Uri uri = new Uri("pages/Page1.xaml", UriKind.Relative);
+                        //                        this.Navigate(uri);
+                        //                        Uri uri = new Uri("pages/Page1.xaml", UriKind.Relative);
+                        //                        NavigationService ns = NavigationService.GetNavigationService(this);
+                        //                        frame.Navigate(uri);
+                        //                        this.NavigationService.Refresh();
+                        //                        ns.Navigate(uri);
+                        this.Content = new Page1();
+                        client.BaseAddress = new Uri("http://localhost:5093");
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                        HttpResponseMessage response = client.GetAsync("/api/Usr").Result;
+
+                        
+
+                        if (response.IsSuccessStatusCode)
+                        {
+
+                            //Add ref System.Net.Http.Formatting.dll => search formatting
+
+                            // IList<Usr> usr = response.Content.ReadAsAsync<IList<Usr>>().Result;
+                            var usrList = response.Content.ReadAsAsync<IEnumerable<Usr>>().Result;
+                            // Parse the response body.
+                            //var param1 = response.Content.ReadAsAsync<IEnumerable<ParameterType>>().Result.First();
+                            //var parameter = response.Content.ReadAsAsync<ParameterType>().Result;
+                            //invoiceFolder = parameter.Value;
+                            //EmployeeList.Where()
+                            string message = string.Empty;
+                            
+                            Usr usrlist = usrList.Where(x => x.LastName == str).FirstOrDefault();
+                            
+                            // message = usrlogged.FirstOrDefault() + Environment.NewLine;
+                            message = usrlist.LastName;
+
+                            MessageBox.Show(message);
+
+
+                        }
+                        else
+                        {
+                            Mouse.OverrideCursor = null;
+                            MessageBox.Show("Error : (" + response.StatusCode + ") " + response.ReasonPhrase);
+                        }
+
                         return;
+                
+//                        this.Close();
                     }
                     else
                     {
@@ -141,6 +204,50 @@ namespace WpfApp1
         {
             var tb = sender as TextBox;
             str = tb.Text;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+//            NavigationService ns = NavigationService.GetNavigationService(this);
+//            ns.Navigate("pages/Page1.xaml");
+//            this.NavigationService.Navigate(new Uri("pages/Page1.xaml", UriKind.Relative));
+            this.Content = new Page1();
+        }
+
+       
+
+        public partial class DataGridDetailsSample : Window
+        {
+        
+            public DataGridDetailsSample()
+            {
+                InitializeComponent();
+                // MessageBox.Show(message);
+                //                            MessageBox.Show(usr.All().FirstName);
+                //  MessageBox.Show(usr.FirstOrDefault().FirstName);
+                //                            var Page1 = sender as Page1;
+                List<User> users = new List<User>();
+                //                           users.Add(new User() {  Name = usrlist.LastName });
+                //                            users.Add(new User() {  Name = usrlist.LastName });
+                users.Add(new User() { Name = "Sammy Doe" });
+                //                            Page1.DataGrid.ToString()="usr";
+                //                            Page1 = usr.LastName;
+                dgUsers.ItemsSource = users;
+            }
+        }
+
+        public class User
+        {
+            public string Name { get; set; }
+
+            public string Details
+            {
+                get
+                {
+                    return String.Format("{0} was born on {1} and this is a long description of the person.", this.Name);
+                }
+            }
         }
 
     }
