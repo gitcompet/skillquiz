@@ -20,14 +20,20 @@ namespace WpfApp1.pages
     /// </summary>
     public partial class Page1 : Page
     {
-        public Page1()
+        public Page1(List<MainWindow.User> users)
         {
-            InitializeComponent();
+          InitializeComponent();
+          dgUsers.ItemsSource = (System.Collections.IEnumerable)users;
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            MessageBox.Show("clicgriddata");
-        }
+  //     private void InitializeComponent()
+  //     {
+  //         throw new NotImplementedException();
+  //     }
+
+       private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+       {
+           MessageBox.Show("clicgriddata");
+       }
     }
 }

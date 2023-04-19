@@ -20,11 +20,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
 using WpfApp1.pages;
+
 using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Net.Http.Json;
 using WebApiMiniPj.Modeles;
 using System.Collections;
+//using static WpfApp1.MainWindow;
+//using static WpfApp1.pages.Page1;
 
 namespace WpfApp1
 
@@ -89,7 +92,7 @@ namespace WpfApp1
             //            }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             
             int usrchk = 0;
@@ -104,7 +107,9 @@ namespace WpfApp1
             SqlCommand myCommand = new SqlCommand("select * from [skillquizdb].[dbo].[Usr] where LoginTxt = '" + str.ToString() + "'", myConnection);
 
             SqlDataReader myReader = myCommand.ExecuteReader();
-            myReader.Read();            
+            myReader.Read();
+
+  //          MessageBox.Show("message-1");
 
             try
             {
@@ -114,10 +119,13 @@ namespace WpfApp1
                 if (str != strBdd)
                 {
                     usrchk = 0;
+                    MessageBox.Show("message-f");
                 }
                 else
                 {
+ //                   MessageBox.Show("message-t");
                     str2 = passwordBox1.Password;
+    //                MessageBox.Show("messagebt");
                     if (str2 == myReader["PasswordTxt"].ToString())
                     {
                         usrchk = 1;
@@ -129,35 +137,56 @@ namespace WpfApp1
                         //                        frame.Navigate(uri);
                         //                        this.NavigationService.Refresh();
                         //                        ns.Navigate(uri);
-                        this.Content = new Page1();
+      
+
+    //                    MessageBox.Show("messageap");
                         client.BaseAddress = new Uri("http://localhost:5093");
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                         HttpResponseMessage response = client.GetAsync("/api/Usr").Result;
 
-                        
+//                        MessageBox.Show("message0");
 
                         if (response.IsSuccessStatusCode)
                         {
 
-                            //Add ref System.Net.Http.Formatting.dll => search formatting
+                            //                          MessageBox.Show("message1" );
 
+                            //Add ref System.Net.Http.Formatting.dll => search formatting
+                            //                          MessageBox.Show("message10" + str);
                             // IList<Usr> usr = response.Content.ReadAsAsync<IList<Usr>>().Result;
-                            var usrList = response.Content.ReadAsAsync<IEnumerable<Usr>>().Result;
+                            var usrList = await  response.Content.ReadAsAsync<IEnumerable<Usr>>();
                             // Parse the response body.
                             //var param1 = response.Content.ReadAsAsync<IEnumerable<ParameterType>>().Result.First();
                             //var parameter = response.Content.ReadAsAsync<ParameterType>().Result;
                             //invoiceFolder = parameter.Value;
                             //EmployeeList.Where()
                             string message = string.Empty;
-                            
+  //                          MessageBox.Show("message11"+ str);
                             Usr usrlist = usrList.Where(x => x.LastName == str).FirstOrDefault();
                             
                             // message = usrlogged.FirstOrDefault() + Environment.NewLine;
                             message = usrlist.LastName;
 
-                            MessageBox.Show(message);
+                            MessageBox.Show("message : " + message);
 
+                            //                            DataGridDetailsSample dgs = new DataGridDetailsSample(usrlist.FirstName);
+                            //                            dgs.Title = "toto";                          
+                            //                            dgs.Show();
+
+                            //                            this.Content = new Page1();
+
+                            List<User> users = new List<User>();
+                            
+                            this.Content = new Page1(users);
+
+                            users.Add(new User() { Name = usrlist.LastName });
+                            users.Add(new User() { Name = message });
+                            users.Add(new User() { Name = usrList.ToString() });
+                            users.Add(new User() { Name = usrlist.ToString() });
+
+
+                            //                       page.NavigationService.Navigate(page, message); 
 
                         }
                         else
@@ -165,6 +194,8 @@ namespace WpfApp1
                             Mouse.OverrideCursor = null;
                             MessageBox.Show("Error : (" + response.StatusCode + ") " + response.ReasonPhrase);
                         }
+
+                        MessageBox.Show("messagesp");
 
                         return;
                 
@@ -176,9 +207,12 @@ namespace WpfApp1
                         MessageBox.Show("Mot de passe inconnu");
                         return;
                     }
+
+
                 }
 
                 //  MessageBox.Show(myReader["LoginTxt"].ToString());
+ //               this.Content = new Page1();
                 // myReader.Read();
 
                 if (usrchk == 2)
@@ -212,7 +246,7 @@ namespace WpfApp1
 //            NavigationService ns = NavigationService.GetNavigationService(this);
 //            ns.Navigate("pages/Page1.xaml");
 //            this.NavigationService.Navigate(new Uri("pages/Page1.xaml", UriKind.Relative));
-            this.Content = new Page1();
+//            this.Content = new Page1();
         }
 
        
@@ -220,9 +254,10 @@ namespace WpfApp1
         public partial class DataGridDetailsSample : Window
         {
         
-            public DataGridDetailsSample()
+            public DataGridDetailsSample(string usrList)
             {
-                InitializeComponent();
+ //               InitializeComponent();
+ //               this.Content = new Page1();
                 // MessageBox.Show(message);
                 //                            MessageBox.Show(usr.All().FirstName);
                 //  MessageBox.Show(usr.FirstOrDefault().FirstName);
@@ -233,7 +268,7 @@ namespace WpfApp1
                 users.Add(new User() { Name = "Sammy Doe" });
                 //                            Page1.DataGrid.ToString()="usr";
                 //                            Page1 = usr.LastName;
-                dgUsers.ItemsSource = users;
+//                dgUsers.ItemsSource = users;
             }
         }
 
