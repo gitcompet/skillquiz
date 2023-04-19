@@ -15,13 +15,10 @@
         </Grid.ColumnDefinitions>
         <DataGrid Name="dgUsers" AutoGenerateColumns="False" Margin="-10,109,10,51" Grid.ColumnSpan="2">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="LoginId" Binding="{Binding LoginId}" />
+                <DataGridTextColumn Header="LastName" Binding="{Binding LastName}" />
+                <DataGridTextColumn Header="TypeUserId" Binding="{Binding TypeUserId}" />
             </DataGrid.Columns>
-            <DataGrid.RowDetailsTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Details}" Margin="10" />
-                </DataTemplate>
-            </DataGrid.RowDetailsTemplate>
         </DataGrid>
     </Grid>
 </Page>

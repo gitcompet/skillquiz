@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WebApiMiniPj.Modeles;
 
 namespace WpfApp1.pages
 {
@@ -20,10 +21,10 @@ namespace WpfApp1.pages
     /// </summary>
     public partial class Page1 : Page
     {
-        public Page1(List<MainWindow.User> users)
+        public Page1(List<Usr> users)
         {
           InitializeComponent();
-          dgUsers.ItemsSource = (System.Collections.IEnumerable)users;
+          dgUsers.ItemsSource = users;
         }
 
   //     private void InitializeComponent()

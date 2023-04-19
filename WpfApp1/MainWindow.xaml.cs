@@ -178,12 +178,13 @@ namespace WpfApp1
 
                             List<User> users = new List<User>();
                             
-                            this.Content = new Page1(users);
+                            this.Content = new Page1(usrList.ToList());
 
-                            users.Add(new User() { Name = usrlist.LastName });
-                            users.Add(new User() { Name = message });
-                            users.Add(new User() { Name = usrList.ToString() });
-                            users.Add(new User() { Name = usrlist.ToString() });
+                           // users.Add(new User() { Name = usrlist.LastName });
+                            //users.Add(new User() { Name = message });
+                            //users.Add(new User() { Name = usrList.ToString() });
+                            //users.Add(new User() { Name = usrlist.ToString() });
+                            //users.Add(new User() { Name = usrList.All<> });
 
 
                             //                       page.NavigationService.Navigate(page, message); 
