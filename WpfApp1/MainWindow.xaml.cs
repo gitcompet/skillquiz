@@ -145,7 +145,7 @@ namespace WpfApp1
 
                         HttpResponseMessage response = client.GetAsync("/api/Usr").Result;
 
-//                        MessageBox.Show("message0");
+                        //                        MessageBox.Show("message0");
 
                         if (response.IsSuccessStatusCode)
                         {
@@ -155,39 +155,41 @@ namespace WpfApp1
                             //Add ref System.Net.Http.Formatting.dll => search formatting
                             //                          MessageBox.Show("message10" + str);
                             // IList<Usr> usr = response.Content.ReadAsAsync<IList<Usr>>().Result;
-                            var usrList = await  response.Content.ReadAsAsync<IEnumerable<Usr>>();
+                            var usrList = await response.Content.ReadAsAsync<IEnumerable<Usr>>();
                             // Parse the response body.
                             //var param1 = response.Content.ReadAsAsync<IEnumerable<ParameterType>>().Result.First();
                             //var parameter = response.Content.ReadAsAsync<ParameterType>().Result;
                             //invoiceFolder = parameter.Value;
                             //EmployeeList.Where()
                             string message = string.Empty;
-  //                          MessageBox.Show("message11"+ str);
+                            //                          MessageBox.Show("message11"+ str);
                             Usr usrlist = usrList.Where(x => x.LastName == str).FirstOrDefault();
-                            
+
                             // message = usrlogged.FirstOrDefault() + Environment.NewLine;
                             message = usrlist.LastName;
 
-                            MessageBox.Show("message : " + message);
+                            MessageBox.Show("cnx user : " + message);
 
-                            //                            DataGridDetailsSample dgs = new DataGridDetailsSample(usrlist.FirstName);
-                            //                            dgs.Title = "toto";                          
-                            //                            dgs.Show();
+                            if (usrlist.TypeUserId== 1) { 
 
                             //                            this.Content = new Page1();
 
                             List<User> users = new List<User>();
-                            
+
                             this.Content = new Page1(usrList.ToList());
 
-                           // users.Add(new User() { Name = usrlist.LastName });
+                            // users.Add(new User() { Name = usrlist.LastName });
                             //users.Add(new User() { Name = message });
                             //users.Add(new User() { Name = usrList.ToString() });
                             //users.Add(new User() { Name = usrlist.ToString() });
                             //users.Add(new User() { Name = usrList.All<> });
-
-
-                            //                       page.NavigationService.Navigate(page, message); 
+                            }
+                            else
+                            {                                
+                                DataGridDetailsSample dgs = new DataGridDetailsSample(usrlist.FirstName);
+                                dgs.Title = "test de : " + usrlist.FirstName;
+                                dgs.Show();
+                            }
 
                         }
                         else
@@ -196,7 +198,7 @@ namespace WpfApp1
                             MessageBox.Show("Error : (" + response.StatusCode + ") " + response.ReasonPhrase);
                         }
 
-                        MessageBox.Show("messagesp");
+                        MessageBox.Show("you are logged");
 
                         return;
                 
@@ -213,7 +215,7 @@ namespace WpfApp1
                 }
 
                 //  MessageBox.Show(myReader["LoginTxt"].ToString());
- //               this.Content = new Page1();
+                //               this.Content = new Page1();
                 // myReader.Read();
 
                 if (usrchk == 2)
@@ -244,32 +246,17 @@ namespace WpfApp1
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
 
-//            NavigationService ns = NavigationService.GetNavigationService(this);
-//            ns.Navigate("pages/Page1.xaml");
-//            this.NavigationService.Navigate(new Uri("pages/Page1.xaml", UriKind.Relative));
-//            this.Content = new Page1();
         }
 
        
-
+// cre une forme vide ?!
         public partial class DataGridDetailsSample : Window
         {
         
             public DataGridDetailsSample(string usrList)
             {
- //               InitializeComponent();
- //               this.Content = new Page1();
-                // MessageBox.Show(message);
-                //                            MessageBox.Show(usr.All().FirstName);
-                //  MessageBox.Show(usr.FirstOrDefault().FirstName);
-                //                            var Page1 = sender as Page1;
-                List<User> users = new List<User>();
-                //                           users.Add(new User() {  Name = usrlist.LastName });
-                //                            users.Add(new User() {  Name = usrlist.LastName });
-                users.Add(new User() { Name = "Sammy Doe" });
-                //                            Page1.DataGrid.ToString()="usr";
-                //                            Page1 = usr.LastName;
-//                dgUsers.ItemsSource = users;
+ //               List<User> users = new List<User>();
+ //               users.Add(new User() { Name = "Sammy Doe" });
             }
         }
 
@@ -286,5 +273,19 @@ namespace WpfApp1
             }
         }
 
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void MenuItem_Click_3(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
