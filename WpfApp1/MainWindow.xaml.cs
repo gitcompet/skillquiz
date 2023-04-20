@@ -31,7 +31,6 @@ using System.Collections;
 
 namespace WpfApp1
 
-
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -40,6 +39,7 @@ namespace WpfApp1
     {
         string str;
         string str2;
+        string usermode;
 
         public object NavigationService { get; private set; }
         HttpClient client = new HttpClient();
@@ -138,7 +138,6 @@ namespace WpfApp1
                         //                        this.NavigationService.Refresh();
                         //                        ns.Navigate(uri);
       
-
     //                    MessageBox.Show("messageap");
                         client.BaseAddress = new Uri("http://localhost:5093");
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -149,7 +148,6 @@ namespace WpfApp1
 
                         if (response.IsSuccessStatusCode)
                         {
-
                             //                          MessageBox.Show("message1" );
 
                             //Add ref System.Net.Http.Formatting.dll => search formatting
@@ -167,6 +165,11 @@ namespace WpfApp1
 
                             // message = usrlogged.FirstOrDefault() + Environment.NewLine;
                             message = usrlist.LastName;
+                            usermode = "candidat";
+                            if ( usrlist.TypeUserId == 1 )
+                            {
+                                usermode = "admin";
+                            };
 
                             MessageBox.Show("cnx user : " + message);
 
@@ -198,7 +201,7 @@ namespace WpfApp1
                             MessageBox.Show("Error : (" + response.StatusCode + ") " + response.ReasonPhrase);
                         }
 
-                        MessageBox.Show("you are logged");
+                        MessageBox.Show("you are logged in " + usermode);
 
                         return;
                 
@@ -210,7 +213,6 @@ namespace WpfApp1
                         MessageBox.Show("Mot de passe inconnu");
                         return;
                     }
-
 
                 }
 
@@ -247,19 +249,7 @@ namespace WpfApp1
         {
 
         }
-
        
-// cre une forme vide ?!
-        public partial class DataGridDetailsSample : Window
-        {
-        
-            public DataGridDetailsSample(string usrList)
-            {
- //               List<User> users = new List<User>();
- //               users.Add(new User() { Name = "Sammy Doe" });
-            }
-        }
-
         public class User
         {
             public string Name { get; set; }
@@ -275,7 +265,7 @@ namespace WpfApp1
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Menu2");
         }
 
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
@@ -285,7 +275,7 @@ namespace WpfApp1
 
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Menu3");
         }
     }
 }

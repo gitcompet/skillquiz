@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  app:
+image: nginx:1.9
+volumes:
+- .:/usr/share/nginx/html/
+expose:
+- "80"
+    port:
+      - "8888:8080"
+    depends_on:
+
+    environment:
+
+    networks:
+      - backendM
+
+networks:
+  backendM:
+
