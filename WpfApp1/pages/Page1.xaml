@@ -14,9 +14,10 @@
             <ColumnDefinition Width="68*"/>
             <ColumnDefinition Width="135*"/>
             <ColumnDefinition Width="72*"/>
-            <ColumnDefinition Width="407*"/>
+            <ColumnDefinition Width="202*"/>
+            <ColumnDefinition Width="205*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid Name="dgUsers" AutoGenerateColumns="False" Margin="12,-36,63,188" Grid.ColumnSpan="5" RenderTransformOrigin="0.5,0.5">
+        <DataGrid Name="dgUsers" AutoGenerateColumns="False" Margin="12,-36,63,188" Grid.ColumnSpan="6" RenderTransformOrigin="0.5,0.5">
             <DataGrid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

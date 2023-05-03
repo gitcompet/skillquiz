@@ -1,9 +1,13 @@
-﻿using System;
+﻿using Azure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -13,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WebApiMiniPj.Modeles;
+using static WpfApp1.pages.Page2;
 
 namespace WpfApp1.pages
 {
@@ -21,10 +26,44 @@ namespace WpfApp1.pages
     /// </summary>
     public partial class Page1 : Page
     {
-        public Page1(List<Usr> users)
+
+        HttpClient client = new HttpClient();
+        public Page1() //{ }
+ //       public Page1(List<Usr> users)
         {
           InitializeComponent();
-          dgUsers.ItemsSource = users;
+
+            client.BaseAddress = new Uri("http://localhost:5093");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync("/api/Usr").Result;
+            if (response.IsSuccessStatusCode)
+            {
+
+                //Add ref System.Net.Http.Formatting.dll => search formatting
+
+                var UsrList = response.Content.ReadAsAsync<IEnumerable<User>>().Result;
+                // Parse the response body.
+                //var param1 = response.Content.ReadAsAsync<IEnumerable<ParameterType>>().Result.First();
+                //var parameter = response.Content.ReadAsAsync<ParameterType>().Result;
+                //invoiceFolder = parameter.Value;
+                //EmployeeList.Where()
+
+                dgUsers.ItemsSource = UsrList;
+                MessageBox.Show(UsrList.ToString());
+                List<User> users = new List<User>();
+            }
+            else
+            {
+                Mouse.OverrideCursor = null;
+                MessageBox.Show("Error : (" + response.StatusCode + ") " + response.ReasonPhrase);
+            }
+
+            IList<Usr> usr = response.Content.ReadAsAsync<IList<Usr>>().Result;
+
+            
+                      
+
         }
 
   //     private void InitializeComponent()

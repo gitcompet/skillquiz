@@ -7,10 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
-
-
-
     <Grid Width="NaN">
+        
         <StackPanel VerticalAlignment="Top">
             <Menu Width="Auto" Height="51" RenderTransformOrigin="0.5,0.5">
                 <Menu.RenderTransform>
@@ -32,11 +30,9 @@
                 </MenuItem>
             </Menu>
         </StackPanel>
-        <TextBox HorizontalAlignment="Left" Margin="297,85,0,0" TextWrapping="Wrap" Text="(user)" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged"/>
-
-        <PasswordBox Height="42" Width="200" Margin="297,131,303,0" Name="passwordBox1" VerticalAlignment="Top" Background="LightBlue" Foreground="DarkBlue" Password="" />
-
-        <Button Content="Login" HorizontalAlignment="Left" Margin="297,203,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+    <Grid>
+    <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+    </Grid>
     </Grid>
 
 </Window>
