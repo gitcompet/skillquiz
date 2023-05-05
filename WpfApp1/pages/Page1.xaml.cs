@@ -42,16 +42,27 @@ namespace WpfApp1.pages
 
                 //Add ref System.Net.Http.Formatting.dll => search formatting
 
-                var UsrList = response.Content.ReadAsAsync<IEnumerable<User>>().Result;
+//                List<User> users = new List<User>();
+//                List<Usr> UsrList = new List<Usr>();
+
+                var UsrList = response.Content.ReadAsAsync<IEnumerable<Usr>>().Result;
+
+                dgUsers.ItemsSource = UsrList;
+
+
+
                 // Parse the response body.
                 //var param1 = response.Content.ReadAsAsync<IEnumerable<ParameterType>>().Result.First();
                 //var parameter = response.Content.ReadAsAsync<ParameterType>().Result;
                 //invoiceFolder = parameter.Value;
                 //EmployeeList.Where()
 
-                dgUsers.ItemsSource = UsrList;
-                MessageBox.Show(UsrList.ToString());
-                List<User> users = new List<User>();
+                //                MessageBox.Show(UsrList.ToString());
+
+//                                        NavigationService ns = NavigationService.GetNavigationService(this);
+                //                        frame.Navigate(uri);
+//                                        this.NavigationService.Refresh();
+
             }
             else
             {
@@ -60,10 +71,7 @@ namespace WpfApp1.pages
             }
 
             IList<Usr> usr = response.Content.ReadAsAsync<IList<Usr>>().Result;
-
-            
-                      
-
+                                  
         }
 
   //     private void InitializeComponent()
@@ -75,5 +83,17 @@ namespace WpfApp1.pages
        {
            MessageBox.Show("clicgriddata");
        }
+
+        private void dgUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MessageBox.Show("clicgriddatachg" + " - " + e.ToString()+" - "+sender.ToString());
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("clicgriddatachg" + " - " + e.ToString() + " - " + sender.ToString());
+            HttpResponseMessage response = client.GetAsync("/api/Usr").Result;
+
+        }
     }
 }

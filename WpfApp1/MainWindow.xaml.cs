@@ -18,7 +18,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Navigation;
 using WpfApp1.pages;
 
 using System.Net.Http.Headers;
@@ -90,7 +89,7 @@ namespace WpfApp1
 
         }
 
-        private void Navigate(string page)
+        public void Navigate(string page)
         {
             MainFrame.Navigate(new Uri(page, UriKind.RelativeOrAbsolute));
         }
@@ -113,14 +112,15 @@ namespace WpfApp1
 
         private void MenuItem_Click_3(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Menu3");
+ //           MessageBox.Show("Menu3");
             this.Navigate("pages/Page1.xaml");
         }
 
-        internal static void Navigate(Uri uri)
-        {
-            MessageBox.Show("Coucou");
+//        internal static void Navigate(Uri uri)
+//       {
+//           MessageBox.Show("Coucou");
             //throw new NotImplementedException();
-        }
+//            MainFrame.Navigate(new Uri(page, UriKind.RelativeOrAbsolute));
+//        }
     }
 }

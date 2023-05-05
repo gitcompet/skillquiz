@@ -27,14 +27,6 @@ using WpfApp1;
 using System.Net.Http.Json;
 using System.Collections;
 
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Diagnostics.Eventing.Reader;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -43,15 +35,10 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Navigation;
-using WpfApp1.pages;
 
 using System.Net.Http.Headers;
 using System.Net.Http;
-using System.Net.Http.Json;
-using System.Collections;
 using Azure;
 
 namespace WpfApp1.pages
@@ -79,7 +66,7 @@ namespace WpfApp1.pages
 
         }
 
-        public object NavigationService { get; private set; }
+//        public object NavigationService { get; private set; }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -167,29 +154,30 @@ namespace WpfApp1.pages
 
                             MessageBox.Show("cnx user : " + str);
 
-                            this.Navigate("pages/Page1.xaml");
-
                             if (usridbdd == "1")                            
                             {
-                                //                                                            this.Content = new Page1();
+                                //   this.Content = new Page1();
 
-                                this.Navigate("pages/Page1.xaml");
+                                //wpfapp1.MainWindow.m("pages/Page1.xaml");
 
+                                //Main.Content = new Page1(usrList.ToList());
+                                this.NavigationService.Navigate(new Uri("pages/Page1.xaml", UriKind.Relative));
 
-
-                               //             this.Content = new Page1(usrList.ToList());
-
-                                // users.Add(new User() { Name = usrlist.LastName });
-                                //users.Add(new User() { Name = message });
-                                //users.Add(new User() { Name = usrList.ToString() });
-                                //users.Add(new User() { Name = usrlist.ToString() });
+                                //users.Add(new User() { Name = usrlist.LastName });
+                                // users.Add(new User() { Name = message });
+                                // users.Add(new User() { Name = usrList.ToString() });
+                                // users.Add(new User() { Name = usrlist.ToString() });
                                 //users.Add(new User() { Name = usrList.All<> });
                             }
                             else
                             {
-                                //             DataGridDetailsSample dgs = new DataGridDetailsSample(usrlist.FirstName);
-                                //             dgs.Title = "test de : " + usrlist.FirstName;
-                                //                                dgs.Show();                                
+                                //            DataGridDetailsSample dgs = new DataGridDetailsSample(usrlist.FirstName);
+                                //          dgs.Title = "test de : " + usrlist.FirstName;
+                                //                           dgs.Show();
+                                //                           
+
+                                this.NavigationService.Navigate(new Uri("pages/Page3.xaml", UriKind.Relative));
+
                             }
 
                         }
@@ -210,13 +198,12 @@ namespace WpfApp1.pages
                         usrchk = 2;
                         MessageBox.Show("Mot de passe inconnu");
                         return;
-                    }
+                    }        
 
                 }
 
-
                 //  MessageBox.Show(myReader["LoginTxt"].ToString());
-                //               this.Content = new Page1();
+                               this.Content = new Page1();
                 // myReader.Read();
 
                 if (usrchk == 2)
@@ -236,12 +223,8 @@ namespace WpfApp1.pages
                     MessageBox.Show("Utilisateur inconnu");
                 }
             }
-        }
 
-        private void Navigate(string page)
-        {
-//            this.Navigate(page);
-            MainWindow.Navigate(new Uri(page, UriKind.RelativeOrAbsolute));
+            if ( usrchk == 1 ) { this.Content = new Page1(); }
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

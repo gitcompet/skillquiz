@@ -5,7 +5,7 @@ namespace WebApiMiniPj.Modeles;
 
 public partial class Usr
 {
-    public int LoginId { get; set; }
+    public int? LoginId { get; set; }
 
     public string LoginTxt { get; set; } = null!;
 

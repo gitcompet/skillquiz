@@ -17,7 +17,7 @@
             <ColumnDefinition Width="202*"/>
             <ColumnDefinition Width="205*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid Name="dgUsers" AutoGenerateColumns="False" Margin="12,-36,63,188" Grid.ColumnSpan="6" RenderTransformOrigin="0.5,0.5">
+        <DataGrid Name="dgUsers" AutoGenerateColumns="False" Margin="12,-36,63,188" Grid.ColumnSpan="6" RenderTransformOrigin="0.5,0.5" SelectionChanged="dgUsers_SelectionChanged">
             <DataGrid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -32,5 +32,6 @@
                 <DataGridTextColumn Header="TypeUserId" Binding="{Binding TypeUserId}" />
             </DataGrid.Columns>
         </DataGrid>
+        <Button Grid.Column="2" Content="add new" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="24" Margin="125,-73,0,0" VerticalAlignment="Top" Width="133" Click="Button_Click"/>
     </Grid>
 </Page>
