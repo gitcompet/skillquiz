@@ -26,12 +26,12 @@ namespace WebApiMiniPj.Controllers
 
     public class UsrController : ControllerBase
     {
-        private SkillquizdbContext db = new SkillquizdbContext();
+        private SkillquizdbContext database = new SkillquizdbContext();
         // GET: user
         [HttpGet("")]
         public IQueryable<Usr> GetUsr()
         {
-            return db.Usrs;
+            return database.Usrs;
         }
 
 //       [HttpGet("{id}")]
@@ -64,8 +64,10 @@ namespace WebApiMiniPj.Controllers
             usrTmp.IsActive = 0;
             usrTmp.TypeUserId = 0;
 
-            db.Usrs.AddAsync(usrTmp);
-            await db.SaveChangesAsync();
+            database.Usrs.AddAsync(usrTmp);
+            await database.SaveChangesAsync();
+
+// exemple            database.Usrs.Add(usrTmp);
         }
     }
 }
